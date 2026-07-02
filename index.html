@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="color-scheme" content="dark"/>
   <meta name="theme-color" content="#080808"/>
+  <link rel="icon" type="image/png" href="imagens/favicon.png"/>
   <title>Vitor Ribeiro — Dev & Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -781,13 +782,176 @@
       flex-direction: column;
     }
     #project-viewer-fm-pdf.active { display: flex; }
+
+    #project-viewer-ca {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    #project-viewer-ca.active { display: flex; }
+
+    #project-viewer-tess-logo {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    #project-viewer-tess-logo.active { display: flex; }
+
+    #project-viewer-yani {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    #project-viewer-yani.active { display: flex; }
+
+    /* Depoimentos */
+    .testimonial-carousel {
+      overflow: hidden;
+      position: relative;
+    }
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .testimonial-slide {
+      min-width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.2rem 2rem;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 0.6;
+      margin-bottom: 0.8rem;
+      opacity: 0.6;
+    }
+    .testimonial-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text);
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 1rem;
+      max-width: 100%;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testimonial-initials {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .testimonial-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .testimonial-company {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .testimonial-dots {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .dot.active {
+      background: var(--accent);
+      transform: scaleX(2.5);
+    }
+
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid var(--accent);
+    }
   </style>
 </head>
 <body>
 
+  <!-- ============================================================
+       CONFIGURAÇÕES DO SITE — edite aqui sem mexer no resto
+  =============================================================== -->
+  <script>
+    const CONFIG = {
+      nome:          "Vitor Ribeiro",
+      cargo:         "Developer Web",
+      localizacao:   "Bahia, Brasil",
+      projetos:      5,          // ← altere aqui ao lançar novo projeto
+      whatsapp:      "5575992421487",
+      email:         "hit.ribeiro@hotmail.com",
+      github:        "https://github.com/viitorrb/",
+      instagram:     "https://instagram.com/viitor.rb",
+      linkedin:      "https://www.linkedin.com/in/jo%C3%A3o-vitor-ribeiro-320423407",
+      ano:           2026,
+    };
+
+    // Aplica automaticamente no HTML
+    document.addEventListener('DOMContentLoaded', () => {
+      // Projetos entregues
+      const countEl = document.querySelector('[data-count]');
+      if (countEl) {
+        countEl.dataset.count = CONFIG.projetos;
+        countEl.textContent = CONFIG.projetos + '+';
+      }
+
+      // Ano no footer
+      const footer = document.querySelector('footer p');
+      if (footer) footer.innerHTML = `© ${CONFIG.ano} ${CONFIG.nome} — Dev & Designer`;
+
+      // Links de contato
+      const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+      emailLinks.forEach(a => a.href = 'mailto:' + CONFIG.email);
+
+      const waLink = document.querySelector('a[href*="wa.me"]');
+      if (waLink) {
+        const msg = encodeURIComponent('Oi Vitor, vim pelo seu portfólio e quero conversar sobre um projeto!');
+        waLink.href = `https://wa.me/${CONFIG.whatsapp}?text=${msg}`;
+      }
+    });
+  </script>
+  <!-- ============================================================ -->
+
   <!-- NAV -->
   <nav>
-    <a href="#hero" class="nav-logo"><img src="logo.png" alt="Vitor Ribeiro" style="height:36px; width:auto; display:block;"/></a>
+    <a href="#hero" class="nav-logo"><img src="imagens/logo.png" alt="Vitor Ribeiro" style="height:36px; width:auto; display:block;"/></a>
     <ul class="nav-links">
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#servicos">Serviços</a></li>
@@ -900,7 +1064,7 @@
       <!-- TESS CLOTHING -->
       <a href="#" class="project-card reveal">
         <div class="project-thumb-wrap" style="cursor:pointer;" onclick="openGallery()">
-          <img src="1-capa_mockup.jpg" alt="Tess Clothing" class="project-thumb"/>
+          <img src="imagens/1-capa_mockup.jpg" alt="Tess Clothing" class="project-thumb"/>
           <div class="gallery-hint">Ver projeto</div>
         </div>
         <div class="project-info">
@@ -918,7 +1082,7 @@
       <!-- FM PACK -->
       <a href="#" class="project-card reveal reveal-delay-1">
         <div class="project-thumb-wrap" style="cursor:pointer;" onclick="openGalleryFM()">
-          <img src="1-capa_mockup_fm.jpg" alt="FM Pack" class="project-thumb"/>
+          <img src="imagens/1-capa_mockup_fm.jpg" alt="FM Pack" class="project-thumb"/>
           <div class="gallery-hint">Ver projeto</div>
         </div>
         <div class="project-info">
@@ -938,32 +1102,89 @@
     <p class="section-eyebrow" style="margin-bottom:1.5rem;">Logomarcas</p>
     <div class="portfolio-grid logo-grid">
 
-      <div class="project-card">
+      <div class="project-card" style="cursor:pointer;" onclick="openGalleryCA()">
+        <div class="project-thumb-wrap">
+          <img src="imagens/capa_casaoito.jpg" alt="CASAOITO" class="project-thumb"/>
+          <div class="gallery-hint">Ver portfólio</div>
+        </div>
         <div class="project-info">
           <h3 class="project-name">CASAOITO</h3>
+          <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
       </div>
 
       <div class="project-card" style="cursor:pointer;" onclick="openGalleryFMPDF()">
+        <div class="project-thumb-wrap">
+          <img src="imagens/fm_page_01.jpg" alt="FM PACK" class="project-thumb"/>
+          <div class="gallery-hint">VER PORTFÓLIO</div>
+        </div>
         <div class="project-info">
           <h3 class="project-name">FM PACK</h3>
           <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
-          <div class="gallery-hint" style="position:static;display:inline-block;margin-top:0.8rem;">Ver portfólio</div>
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" style="cursor:pointer;" onclick="openGalleryTessLogo()">
+        <div class="project-thumb-wrap">
+          <img src="imagens/capa do site.jpg" alt="TESS CLOTHING" class="project-thumb"/>
+          <div class="gallery-hint">Ver portfólio</div>
+        </div>
         <div class="project-info">
           <h3 class="project-name">TESS CLOTHING</h3>
+          <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
       </div>
 
-      <div class="project-card">
+      <div class="project-card" style="cursor:pointer;" onclick="openGalleryYani()">
+        <div class="project-thumb-wrap">
+          <img src="imagens/yani_capa.jpg" alt="YANI" class="project-thumb"/>
+          <div class="gallery-hint">Ver portfólio</div>
+        </div>
         <div class="project-info">
           <h3 class="project-name">YANI</h3>
+          <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
       </div>
 
+    </div>
+  </section>
+
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" style="border-top: 1px solid var(--border);">
+    <p class="section-eyebrow reveal" style="margin-bottom:1.5rem;">O que dizem os clientes</p>
+    <div class="testimonial-carousel">
+      <div class="testimonial-track" id="testimonial-track">
+
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Vitor que trabalho incrível. A identidade visual da minha marca ficou acima do esperado! Atendimento rápido e profissional do início ao fim... sucesso.</p>
+          <div class="testimonial-author">
+            <img src="imagens/perfil_casaoito.jpg" alt="Kakau Cruz" class="testimonial-avatar"/>
+            <div>
+              <div class="testimonial-name">Kakau Cruz</div>
+              <div class="testimonial-company">CASAOITO</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Entregou exatamente o que eu precisava, tanto a identidade visual da marca, quanto ao site. Recomendo muito!</p>
+          <div class="testimonial-author">
+            <img src="imagens/perfil_fmpack.jpg" alt="Filipe Matheus" class="testimonial-avatar"/>
+            <div>
+              <div class="testimonial-name">Filipe Matheus</div>
+              <div class="testimonial-company">FM Pack</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="testimonial-dots" id="testimonial-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+      </div>
     </div>
   </section>
 
@@ -976,19 +1197,19 @@
 
       <div class="contato-links">
         <a href="mailto:hit.ribeiro@hotmail.com" class="contato-link">
-          <span class="link-icon"><img src="e-mail.png" alt="Email" style="width:18px;height:18px;object-fit:contain;"/></span>
+          <span class="link-icon"><img src="imagens/e-mail.png" alt="Email" style="width:18px;height:18px;object-fit:contain;"/></span>
           E-mail
         </a>
         <a href="https://github.com/viitorrb/" target="_blank" class="contato-link">
-          <span class="link-icon"><img src="github.png" alt="GitHub" style="width:18px;height:18px;object-fit:contain;"/></span>
+          <span class="link-icon"><img src="imagens/github.png" alt="GitHub" style="width:18px;height:18px;object-fit:contain;"/></span>
           GitHub
         </a>
         <a href="https://instagram.com/viitor.rb" target="_blank" class="contato-link">
-          <span class="link-icon"><img src="logotipo-do-instagram.png" alt="Instagram" style="width:18px;height:18px;object-fit:contain;"/></span>
+          <span class="link-icon"><img src="imagens/logotipo-do-instagram.png" alt="Instagram" style="width:18px;height:18px;object-fit:contain;"/></span>
           Instagram
         </a>
         <a href="https://www.linkedin.com/in/jo%C3%A3o-vitor-ribeiro-320423407" target="_blank" class="contato-link">
-          <span class="link-icon"><img src="linkedin.png" alt="LinkedIn" style="width:18px;height:18px;object-fit:contain;"/></span>
+          <span class="link-icon"><img src="imagens/linkedin.png" alt="LinkedIn" style="width:18px;height:18px;object-fit:contain;"/></span>
           LinkedIn
         </a>
       </div>
@@ -1002,6 +1223,7 @@
         Chamar no WhatsApp
       </a>
     </div>
+
   </section>
 
   <!-- FOOTER -->
@@ -1032,14 +1254,14 @@
       <button class="pv-close" onclick="closeGallery()">✕ Fechar</button>
     </div>
     <div class="pv-scroll">
-      <img src="1-capa_mockup.jpg" alt="Capa"/>
-      <img src="2-tela_inteira.jpg" alt="Tela inteira"/>
-      <img src="foto_1_tess.PNG" alt="Foto 1"/>
-      <img src="foto_2_tess.PNG" alt="Foto 2"/>
-      <img src="foto_3_tess.PNG" alt="Foto 3"/>
-      <img src="foto_4_tess.PNG" alt="Foto 4"/>
-      <img src="foto_5_tess.PNG" alt="Foto 5"/>
-      <img src="foto_6_tess.PNG" alt="Foto 6"/>
+      <img src="imagens/1-capa_mockup.jpg" alt="Capa"/>
+      <img src="imagens/2-tela_inteira.jpg" alt="Tela inteira"/>
+      <img src="imagens/foto_1_tess.PNG" alt="Foto 1"/>
+      <img src="imagens/foto_2_tess.PNG" alt="Foto 2"/>
+      <img src="imagens/foto_3_tess.PNG" alt="Foto 3"/>
+      <img src="imagens/foto_4_tess.PNG" alt="Foto 4"/>
+      <img src="imagens/foto_5_tess.PNG" alt="Foto 5"/>
+      <img src="imagens/foto_6_tess.PNG" alt="Foto 6"/>
     </div>
   </div>
 
@@ -1065,10 +1287,10 @@
       <button class="pv-close" onclick="closeGalleryFM()">✕ Fechar</button>
     </div>
     <div class="pv-scroll">
-      <img src="1-capa_mockup_fm.jpg" alt="Capa FM"/>
-      <img src="2-tela_inteira_fm.jpg" alt="Tela inteira FM"/>
-      <img src="foto_1_fm.PNG" alt="Foto 1 FM"/>
-      <img src="foto_2_fm.PNG" alt="Foto 2 FM"/>
+      <img src="imagens/1-capa_mockup_fm.jpg" alt="Capa FM"/>
+      <img src="imagens/2-tela_inteira_fm.jpg" alt="Tela inteira FM"/>
+      <img src="imagens/foto_1_fm.PNG" alt="Foto 1 FM"/>
+      <img src="imagens/foto_2_fm.PNG" alt="Foto 2 FM"/>
     </div>
   </div>
 
@@ -1203,17 +1425,17 @@
       <button class="pv-close" onclick="closeGalleryFMPDF()">✕ Fechar</button>
     </div>
     <div class="pv-scroll">
-      <img src="fm_page_01.jpg" alt="Página 1"/>
-      <img src="fm_page_02.jpg" alt="Página 2"/>
-      <img src="fm_page_03.jpg" alt="Página 3"/>
-      <img src="fm_page_04.jpg" alt="Página 4"/>
-      <img src="fm_page_05.jpg" alt="Página 5"/>
-      <img src="fm_page_06.jpg" alt="Página 6"/>
-      <img src="fm_page_07.jpg" alt="Página 7"/>
-      <img src="fm_page_08.jpg" alt="Página 8"/>
-      <img src="fm_page_09.jpg" alt="Página 9"/>
-      <img src="fm_page_10.jpg" alt="Página 10"/>
-      <img src="fm_page_11.jpg" alt="Página 11"/>
+      <img src="imagens/fm_page_01.jpg" alt="Página 1"/>
+      <img src="imagens/fm_page_02.jpg" alt="Página 2"/>
+      <img src="imagens/fm_page_03.jpg" alt="Página 3"/>
+      <img src="imagens/fm_page_04.jpg" alt="Página 4"/>
+      <img src="imagens/fm_page_05.jpg" alt="Página 5"/>
+      <img src="imagens/fm_page_06.jpg" alt="Página 6"/>
+      <img src="imagens/fm_page_07.jpg" alt="Página 7"/>
+      <img src="imagens/fm_page_08.jpg" alt="Página 8"/>
+      <img src="imagens/fm_page_09.jpg" alt="Página 9"/>
+      <img src="imagens/fm_page_10.jpg" alt="Página 10"/>
+      <img src="imagens/fm_page_11.jpg" alt="Página 11"/>
     </div>
   </div>
 
@@ -1227,6 +1449,117 @@
       document.getElementById('project-viewer-fm-pdf').classList.remove('active');
       document.body.style.overflow = '';
     }
+  </script>
+
+  <!-- PROJECT VIEWER CASAOITO -->
+  <div id="project-viewer-ca">
+    <div class="pv-header">
+      <span class="pv-title">CASAOITO — Identidade Visual</span>
+      <button class="pv-close" onclick="closeGalleryCA()">✕ Fechar</button>
+    </div>
+    <div class="pv-scroll">
+      <img src="imagens/casaoito_01.jpg" alt="Pág 1-2"/>
+      <img src="imagens/casaoito_02.jpg" alt="Pág 3-4"/>
+      <img src="imagens/casaoito_03.jpg" alt="Pág 5-6"/>
+      <img src="imagens/casaoito_04.jpg" alt="Pág 7-8"/>
+      <img src="imagens/casaoito_05.jpg" alt="Pág 9-10"/>
+      <img src="imagens/casaoito_06.jpg" alt="Pág 11-12"/>
+    </div>
+  </div>
+
+  <script>
+    function openGalleryCA() {
+      document.getElementById('project-viewer-ca').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.querySelector('#project-viewer-ca .pv-scroll').scrollTop = 0;
+    }
+    function closeGalleryCA() {
+      document.getElementById('project-viewer-ca').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <!-- PROJECT VIEWER TESS CLOTHING — Logomarca -->
+  <div id="project-viewer-tess-logo">
+    <div class="pv-header">
+      <span class="pv-title">TESS CLOTHING — Identidade Visual</span>
+      <button class="pv-close" onclick="closeGalleryTessLogo()">✕ Fechar</button>
+    </div>
+    <div class="pv-scroll">
+      <img src="imagens/capa 01.jpg" alt="Página 1"/>
+      <img src="imagens/capa 02.jpg" alt="Página 2"/>
+      <img src="imagens/capa 03.jpg" alt="Página 3"/>
+      <img src="imagens/capa 04.jpg" alt="Página 4"/>
+      <img src="imagens/capa 05.jpg" alt="Página 5"/>
+      <img src="imagens/capa 06.jpg" alt="Página 6"/>
+    </div>
+  </div>
+
+  <script>
+    function openGalleryTessLogo() {
+      document.getElementById('project-viewer-tess-logo').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.querySelector('#project-viewer-tess-logo .pv-scroll').scrollTop = 0;
+    }
+    function closeGalleryTessLogo() {
+      document.getElementById('project-viewer-tess-logo').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <!-- PROJECT VIEWER YANI -->
+  <div id="project-viewer-yani">
+    <div class="pv-header">
+      <span class="pv-title">YANI — Identidade Visual</span>
+      <button class="pv-close" onclick="closeGalleryYani()">✕ Fechar</button>
+    </div>
+    <div class="pv-scroll">
+      <img src="imagens/yani_01.jpg" alt="Páginas 1-2"/>
+      <img src="imagens/yani_02.jpg" alt="Páginas 3-4"/>
+      <img src="imagens/yani_03.jpg" alt="Páginas 5-6"/>
+      <img src="imagens/yani_04.jpg" alt="Páginas 7-8"/>
+    </div>
+  </div>
+
+  <script>
+    function openGalleryYani() {
+      document.getElementById('project-viewer-yani').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.querySelector('#project-viewer-yani .pv-scroll').scrollTop = 0;
+    }
+    function closeGalleryYani() {
+      document.getElementById('project-viewer-yani').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 2;
+    let autoplayTimer;
+
+    function goToSlide(n) {
+      currentSlide = n;
+      document.getElementById('testimonial-track').style.transform = `translateX(-${n * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === n));
+    }
+
+    function nextSlide() {
+      goToSlide((currentSlide + 1) % totalSlides);
+    }
+
+    function startAutoplay() {
+      autoplayTimer = setInterval(nextSlide, 4000);
+    }
+
+    // Pause on hover
+    const carousel = document.querySelector('.testimonial-carousel');
+    if (carousel) {
+      carousel.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+      carousel.addEventListener('mouseleave', startAutoplay);
+    }
+
+    startAutoplay();
   </script>
 </body>
 </html>
