@@ -1180,10 +1180,23 @@
           </div>
         </div>
 
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Fiquei muito satisfeita com o resultado! O site ficou exatamente como eu imaginava: bonito, organizado e funcional. A identidade visual totalmente a cara da marca. O atendimento foi excelente durante todo o processo, sempre com atenção aos detalhes e disposição para fazer os ajustes necessários. Recomendo!</p>
+          <div class="testimonial-author">
+            <img src="imagens/perfil_tess_clothing.jpg" alt="Miryan" class="testimonial-avatar"/>
+            <div>
+              <div class="testimonial-name">Miryan</div>
+              <div class="testimonial-company">Tess Clothing</div>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="testimonial-dots" id="testimonial-dots">
         <span class="dot active" onclick="goToSlide(0)"></span>
         <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
       </div>
     </div>
   </section>
@@ -1535,7 +1548,7 @@
 
   <script>
     let currentSlide = 0;
-    const totalSlides = 2;
+    const totalSlides = 3;
     let autoplayTimer;
 
     function goToSlide(n) {
