@@ -19,6 +19,7 @@
       --text:      #F0F0F0;
       --muted:     #888888;
       --accent:    #4D9FFF;
+      --accent-fill: #1F6ACC; /* darker Signal Blue, same hue — used only where white text sits on the fill; keeps WCAG AA (~5.3:1) */
       --border:    #2A2A2A;
       --font-display: 'Syne', sans-serif;
       --font-body:    'Inter', sans-serif;
@@ -155,7 +156,7 @@
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: var(--accent-fill);
       color: #ffffff;
       font-family: var(--font-display);
       font-weight: 700;
@@ -345,8 +346,13 @@
       text-decoration: none;
       color: inherit;
       display: block;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
     }
     .project-card:hover { border-color: rgba(77,159,255,0.3); }
+    .project-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .project-card:hover .project-thumb { transform: scale(1.03); }
 
     .project-thumb-wrap {
@@ -369,15 +375,19 @@
     .project-thumb-placeholder {
       width: 100%;
       height: 100%;
+      min-height: 240px;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      padding: 1rem;
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.4rem;
+      line-height: 1.3;
       font-weight: 800;
-      color: var(--border);
+      color: var(--muted);
       background: var(--card);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
     }
 
     .project-info {
@@ -487,7 +497,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: var(--accent);
+      background: var(--accent-fill);
       color: #ffffff;
       font-family: var(--font-display);
       font-weight: 700;
@@ -644,7 +654,7 @@
       position: absolute;
       bottom: 12px;
       right: 12px;
-      background: var(--accent);
+      background: var(--accent-fill);
       color: #ffffff;
       font-family: var(--font-display);
       font-weight: 700;
@@ -855,7 +865,7 @@
     .testimonial-initials {
       width: 44px;
       height: 44px;
-      background: var(--accent);
+      background: var(--accent-fill);
       color: #fff;
       font-family: var(--font-display);
       font-weight: 800;
@@ -948,6 +958,24 @@
     });
   </script>
   <!-- ============================================================ -->
+
+  <script>
+    // Broken-image fallback: swaps any failed image element for the existing
+    // .project-thumb-placeholder treatment instead of a bare broken-image icon.
+    // Registered early (capture phase, before any image starts loading) so it
+    // catches every gallery/thumbnail.
+    document.addEventListener('error', e => {
+      const img = e.target;
+      if (!(img instanceof HTMLImageElement) || img.dataset.fallbackApplied) return;
+      img.dataset.fallbackApplied = 'true';
+      const placeholder = document.createElement('div');
+      placeholder.className = 'project-thumb-placeholder';
+      placeholder.textContent = img.alt || 'Imagem indisponível';
+      placeholder.setAttribute('role', 'img');
+      placeholder.setAttribute('aria-label', img.alt || 'Imagem indisponível');
+      img.replaceWith(placeholder);
+    }, true);
+  </script>
 
   <!-- NAV -->
   <nav>
@@ -1102,7 +1130,7 @@
     <p class="section-eyebrow" style="margin-bottom:1.5rem;">Logomarcas</p>
     <div class="portfolio-grid logo-grid">
 
-      <div class="project-card" style="cursor:pointer;" onclick="openGalleryCA()">
+      <button type="button" class="project-card" onclick="openGalleryCA()">
         <div class="project-thumb-wrap">
           <img src="imagens/capa_casaoito.jpg" alt="CASAOITO" class="project-thumb"/>
           <div class="gallery-hint">Ver portfólio</div>
@@ -1111,9 +1139,9 @@
           <h3 class="project-name">CASAOITO</h3>
           <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
-      </div>
+      </button>
 
-      <div class="project-card" style="cursor:pointer;" onclick="openGalleryFMPDF()">
+      <button type="button" class="project-card" onclick="openGalleryFMPDF()">
         <div class="project-thumb-wrap">
           <img src="imagens/fm_page_01.jpg" alt="FM PACK" class="project-thumb"/>
           <div class="gallery-hint">VER PORTFÓLIO</div>
@@ -1122,9 +1150,9 @@
           <h3 class="project-name">FM PACK</h3>
           <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
-      </div>
+      </button>
 
-      <div class="project-card" style="cursor:pointer;" onclick="openGalleryTessLogo()">
+      <button type="button" class="project-card" onclick="openGalleryTessLogo()">
         <div class="project-thumb-wrap">
           <img src="imagens/capa do site.jpg" alt="TESS CLOTHING" class="project-thumb"/>
           <div class="gallery-hint">Ver portfólio</div>
@@ -1133,9 +1161,9 @@
           <h3 class="project-name">TESS CLOTHING</h3>
           <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
-      </div>
+      </button>
 
-      <div class="project-card" style="cursor:pointer;" onclick="openGalleryYani()">
+      <button type="button" class="project-card" onclick="openGalleryYani()">
         <div class="project-thumb-wrap">
           <img src="imagens/yani_capa.jpg" alt="YANI" class="project-thumb"/>
           <div class="gallery-hint">Ver portfólio</div>
@@ -1144,7 +1172,7 @@
           <h3 class="project-name">YANI</h3>
           <p class="project-desc" style="margin-top:0.4rem;">Identidade Visual</p>
         </div>
-      </div>
+      </button>
 
     </div>
   </section>
@@ -1279,17 +1307,50 @@
   </div>
 
   <script>
-    function openGallery() {
-      document.getElementById('project-viewer').classList.add('active');
+    // Generic modal controller: Escape-to-close + focus trap for every
+    // full-screen gallery/PDF viewer, shared by all open*/close* functions below.
+    const MODAL_IDS = ['project-viewer', 'project-viewer-fm', 'project-viewer-fm-pdf', 'project-viewer-ca', 'project-viewer-tess-logo', 'project-viewer-yani', 'pdf-viewer'];
+    let lastFocusedBeforeModal = null;
+
+    function getActiveModalId() {
+      return MODAL_IDS.find(id => document.getElementById(id)?.classList.contains('active'));
+    }
+
+    function openModal(id) {
+      lastFocusedBeforeModal = document.activeElement;
+      const modal = document.getElementById(id);
+      modal.classList.add('active');
       document.body.style.overflow = 'hidden';
-      document.querySelector('.pv-scroll').scrollTop = 0;
+      const scroll = modal.querySelector('.pv-scroll');
+      if (scroll) scroll.scrollTop = 0;
+      modal.querySelector('.pv-close')?.focus();
     }
-    function closeGallery() {
-      document.getElementById('project-viewer').classList.remove('active');
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
       document.body.style.overflow = '';
+      if (lastFocusedBeforeModal) {
+        lastFocusedBeforeModal.focus();
+        lastFocusedBeforeModal = null;
+      }
     }
+
+    function openGallery() { openModal('project-viewer'); }
+    function closeGallery() { closeModal('project-viewer'); }
+
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeGallery();
+      const activeId = getActiveModalId();
+      if (!activeId) return;
+      if (e.key === 'Escape') {
+        activeId === 'pdf-viewer' ? closePDF() : closeModal(activeId);
+        return;
+      }
+      if (e.key === 'Tab') {
+        // Every viewer's only focusable element is its close button (images
+        // and the PDF iframe aren't part of the trap) — keep focus pinned there.
+        e.preventDefault();
+        document.getElementById(activeId).querySelector('.pv-close')?.focus();
+      }
     });
   </script>
 
@@ -1308,15 +1369,8 @@
   </div>
 
   <script>
-    function openGalleryFM() {
-      document.getElementById('project-viewer-fm').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('#project-viewer-fm .pv-scroll').scrollTop = 0;
-    }
-    function closeGalleryFM() {
-      document.getElementById('project-viewer-fm').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openGalleryFM() { openModal('project-viewer-fm'); }
+    function closeGalleryFM() { closeModal('project-viewer-fm'); }
   </script>
 
   <script>
@@ -1343,6 +1397,12 @@
     (function() {
       const el = document.getElementById('bg-name');
       const text = 'VR DEV';
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = text;
+        return;
+      }
+
       let i = 0, deleting = false, pause = false;
 
       function tick() {
@@ -1421,13 +1481,11 @@
     function openPDF(src, title) {
       document.getElementById('pdf-title').textContent = title;
       document.getElementById('pdf-iframe').src = src;
-      document.getElementById('pdf-viewer').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      openModal('pdf-viewer');
     }
     function closePDF() {
-      document.getElementById('pdf-viewer').classList.remove('active');
       document.getElementById('pdf-iframe').src = '';
-      document.body.style.overflow = '';
+      closeModal('pdf-viewer');
     }
   </script>
 
@@ -1453,15 +1511,8 @@
   </div>
 
   <script>
-    function openGalleryFMPDF() {
-      document.getElementById('project-viewer-fm-pdf').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('#project-viewer-fm-pdf .pv-scroll').scrollTop = 0;
-    }
-    function closeGalleryFMPDF() {
-      document.getElementById('project-viewer-fm-pdf').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openGalleryFMPDF() { openModal('project-viewer-fm-pdf'); }
+    function closeGalleryFMPDF() { closeModal('project-viewer-fm-pdf'); }
   </script>
 
   <!-- PROJECT VIEWER CASAOITO -->
@@ -1481,15 +1532,8 @@
   </div>
 
   <script>
-    function openGalleryCA() {
-      document.getElementById('project-viewer-ca').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('#project-viewer-ca .pv-scroll').scrollTop = 0;
-    }
-    function closeGalleryCA() {
-      document.getElementById('project-viewer-ca').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openGalleryCA() { openModal('project-viewer-ca'); }
+    function closeGalleryCA() { closeModal('project-viewer-ca'); }
   </script>
 
   <!-- PROJECT VIEWER TESS CLOTHING — Logomarca -->
@@ -1509,15 +1553,8 @@
   </div>
 
   <script>
-    function openGalleryTessLogo() {
-      document.getElementById('project-viewer-tess-logo').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('#project-viewer-tess-logo .pv-scroll').scrollTop = 0;
-    }
-    function closeGalleryTessLogo() {
-      document.getElementById('project-viewer-tess-logo').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openGalleryTessLogo() { openModal('project-viewer-tess-logo'); }
+    function closeGalleryTessLogo() { closeModal('project-viewer-tess-logo'); }
   </script>
 
   <!-- PROJECT VIEWER YANI -->
@@ -1535,15 +1572,8 @@
   </div>
 
   <script>
-    function openGalleryYani() {
-      document.getElementById('project-viewer-yani').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('#project-viewer-yani .pv-scroll').scrollTop = 0;
-    }
-    function closeGalleryYani() {
-      document.getElementById('project-viewer-yani').classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openGalleryYani() { openModal('project-viewer-yani'); }
+    function closeGalleryYani() { closeModal('project-viewer-yani'); }
   </script>
 
   <script>
@@ -1561,7 +1591,10 @@
       goToSlide((currentSlide + 1) % totalSlides);
     }
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function startAutoplay() {
+      if (prefersReducedMotion) return;
       autoplayTimer = setInterval(nextSlide, 4000);
     }
 
