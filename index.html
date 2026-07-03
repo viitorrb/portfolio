@@ -13,6 +13,15 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* One visible focus treatment for every keyboard-operable control on the
+       page. .project-card carries its own copy of this rule further down for
+       locality with its hover/tilt styles, but it resolves to the same values. */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     :root {
       --bg:        #080808;
       --card:      #141414;
@@ -20,6 +29,7 @@
       --muted:     #888888;
       --accent:    #4D9FFF;
       --accent-fill: #1F6ACC; /* darker Signal Blue, same hue — used only where white text sits on the fill; keeps WCAG AA (~5.3:1) */
+      --on-accent: #FFFFFF; /* pure white — used only as text/icon color on top of --accent-fill */
       --border:    #2A2A2A;
       --font-display: 'Syne', sans-serif;
       --font-body:    'Inter', sans-serif;
@@ -157,7 +167,7 @@
 
     .btn-primary {
       background: var(--accent-fill);
-      color: #ffffff;
+      color: var(--on-accent);
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.85rem;
@@ -194,6 +204,21 @@
       letter-spacing: 0.2em;
       color: var(--accent);
       margin-bottom: 1rem;
+    }
+
+    /* Reserved for Portfólio only — the one deliberate kicker on the page,
+       marking the section that carries the site's actual proof-of-work.
+       Every other section's heading stands alone. See DESIGN.md §3. */
+
+    .portfolio-subgroup-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
     .section-title {
@@ -297,12 +322,6 @@
       color: var(--border);
       margin-bottom: 1.2rem;
       transition: color 0.25s;
-    }
-
-    .servico-icon {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      display: block;
     }
 
     .servico-title {
@@ -498,7 +517,7 @@
       align-items: center;
       gap: 0.6rem;
       background: var(--accent-fill);
-      color: #ffffff;
+      color: var(--on-accent);
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.85rem;
@@ -655,7 +674,7 @@
       bottom: 12px;
       right: 12px;
       background: var(--accent-fill);
-      color: #ffffff;
+      color: var(--on-accent);
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.75rem;
@@ -773,16 +792,6 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    #pdf-viewer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #0a0a0a;
-      z-index: 1000;
-      flex-direction: column;
-    }
-    #pdf-viewer.active { display: flex; }
-
     #project-viewer-fm-pdf {
       display: none;
       position: fixed;
@@ -866,7 +875,7 @@
       width: 44px;
       height: 44px;
       background: var(--accent-fill);
-      color: #fff;
+      color: var(--on-accent);
       font-family: var(--font-display);
       font-weight: 800;
       font-size: 0.85rem;
@@ -1020,7 +1029,6 @@
   <!-- SOBRE -->
   <section id="sobre">
     <div class="sobre-text">
-      <p class="section-eyebrow reveal">Sobre mim</p>
       <h2 class="section-title reveal">Dev & Designer</h2>
       <p class="reveal reveal-delay-1">Sou <strong>Vitor Ribeiro</strong>, desenvolvedor web e designer freelance de Santo Antônio de Jesus — BA. Trabalho com criação de sites, lojas virtuais e identidade visual para negócios que querem presença digital de verdade.</p>
       <p class="reveal reveal-delay-2">Combino desenvolvimento técnico com visão de design: cada projeto entregue funciona, converte e representa bem a marca do cliente.</p>
@@ -1043,7 +1051,6 @@
   <section id="servicos">
     <div class="servicos-intro">
       <div>
-        <p class="section-eyebrow reveal">O que eu faço</p>
         <h2 class="section-title reveal">Serviços</h2>
       </div>
       <p>Da ideia ao ar: desenvolvo sites, lojas e marcas completas para negócios locais e digitais que querem sair do improviso.</p>
@@ -1086,12 +1093,12 @@
     </div>
 
     <!-- Sites -->
-    <p class="section-eyebrow" style="margin-bottom:1.5rem;">Sites</p>
+    <h3 class="portfolio-subgroup-label">Sites</h3>
     <div class="portfolio-grid" style="margin-bottom:4rem;">
 
       <!-- TESS CLOTHING -->
-      <a href="#" class="project-card reveal">
-        <div class="project-thumb-wrap" style="cursor:pointer;" onclick="openGallery()">
+      <button type="button" class="project-card reveal" onclick="openGallery()">
+        <div class="project-thumb-wrap">
           <img src="imagens/1-capa_mockup.jpg" alt="Tess Clothing" class="project-thumb"/>
           <div class="gallery-hint">Ver projeto</div>
         </div>
@@ -1105,11 +1112,11 @@
           <h3 class="project-name">TESS CLOTHING</h3>
           <p class="project-desc">Site de uma loja virtual, voltado para o E-commerce, em vanilla HTML, CSS e JavaScript, para a loja <strong>TESS CLOTHING</strong>, com design responsivo e foco em conversão.</p>
         </div>
-      </a>
+      </button>
 
       <!-- FM PACK -->
-      <a href="#" class="project-card reveal reveal-delay-1">
-        <div class="project-thumb-wrap" style="cursor:pointer;" onclick="openGalleryFM()">
+      <button type="button" class="project-card reveal reveal-delay-1" onclick="openGalleryFM()">
+        <div class="project-thumb-wrap">
           <img src="imagens/1-capa_mockup_fm.jpg" alt="FM Pack" class="project-thumb"/>
           <div class="gallery-hint">Ver projeto</div>
         </div>
@@ -1122,12 +1129,12 @@
           <h3 class="project-name">FM PACK</h3>
           <p class="project-desc">Site institucional desenvolvido para a FM Pack, empresa de logística reversa. O projeto conta com formulário de agendamento de coletas integrado ao WhatsApp, design responsivo com foco em mobile-first e interface voltada para conversão.</p>
         </div>
-      </a>
+      </button>
 
     </div>
 
     <!-- Logomarcas -->
-    <p class="section-eyebrow" style="margin-bottom:1.5rem;">Logomarcas</p>
+    <h3 class="portfolio-subgroup-label">Logomarcas</h3>
     <div class="portfolio-grid logo-grid">
 
       <button type="button" class="project-card" onclick="openGalleryCA()">
@@ -1144,7 +1151,7 @@
       <button type="button" class="project-card" onclick="openGalleryFMPDF()">
         <div class="project-thumb-wrap">
           <img src="imagens/fm_page_01.jpg" alt="FM PACK" class="project-thumb"/>
-          <div class="gallery-hint">VER PORTFÓLIO</div>
+          <div class="gallery-hint">Ver portfólio</div>
         </div>
         <div class="project-info">
           <h3 class="project-name">FM PACK</h3>
@@ -1180,7 +1187,7 @@
 
   <!-- DEPOIMENTOS -->
   <section id="depoimentos" style="border-top: 1px solid var(--border);">
-    <p class="section-eyebrow reveal" style="margin-bottom:1.5rem;">O que dizem os clientes</p>
+    <h2 class="section-title reveal" style="margin-bottom:1.5rem;">Depoimentos</h2>
     <div class="testimonial-carousel">
       <div class="testimonial-track" id="testimonial-track">
 
@@ -1232,7 +1239,6 @@
   <!-- CONTATO -->
   <section id="contato">
     <div class="contato-text reveal">
-      <p class="section-eyebrow reveal">Vamos trabalhar juntos</p>
       <h2 class="section-title reveal">Contato</h2>
       <p>Tem um projeto em mente ou quer levar seu negócio pro digital? Me conta a ideia — sem compromisso.</p>
 
@@ -1308,8 +1314,8 @@
 
   <script>
     // Generic modal controller: Escape-to-close + focus trap for every
-    // full-screen gallery/PDF viewer, shared by all open*/close* functions below.
-    const MODAL_IDS = ['project-viewer', 'project-viewer-fm', 'project-viewer-fm-pdf', 'project-viewer-ca', 'project-viewer-tess-logo', 'project-viewer-yani', 'pdf-viewer'];
+    // full-screen gallery viewer, shared by all open*/close* functions below.
+    const MODAL_IDS = ['project-viewer', 'project-viewer-fm', 'project-viewer-fm-pdf', 'project-viewer-ca', 'project-viewer-tess-logo', 'project-viewer-yani'];
     let lastFocusedBeforeModal = null;
 
     function getActiveModalId() {
@@ -1342,7 +1348,7 @@
       const activeId = getActiveModalId();
       if (!activeId) return;
       if (e.key === 'Escape') {
-        activeId === 'pdf-viewer' ? closePDF() : closeModal(activeId);
+        closeModal(activeId);
         return;
       }
       if (e.key === 'Tab') {
@@ -1466,27 +1472,6 @@
       });
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
-  </script>
-
-  <!-- PDF VIEWER -->
-  <div id="pdf-viewer">
-    <div class="pv-header">
-      <span class="pv-title" id="pdf-title"></span>
-      <button class="pv-close" onclick="closePDF()">✕ Fechar</button>
-    </div>
-    <iframe id="pdf-iframe" src="" style="flex:1;width:100%;border:none;"></iframe>
-  </div>
-
-  <script>
-    function openPDF(src, title) {
-      document.getElementById('pdf-title').textContent = title;
-      document.getElementById('pdf-iframe').src = src;
-      openModal('pdf-viewer');
-    }
-    function closePDF() {
-      document.getElementById('pdf-iframe').src = '';
-      closeModal('pdf-viewer');
-    }
   </script>
 
   <!-- PROJECT VIEWER FM PACK — ID VISUAL -->
